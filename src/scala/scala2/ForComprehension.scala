@@ -52,8 +52,8 @@ object ForComprehension {
     cars2000.foreach(x=>println(s"${x._1} ${x._2}"))
 
     val cars1: Seq[(String, String, Int)] = for {
-      garage <- garages
       car <- cars
+      garage <- garages
       if car.marke == garage.name
     } yield (car.marke, car.model, garage.index)
 
