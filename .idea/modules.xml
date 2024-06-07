@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spark-mooc-2024-04.iml" filepath="$PROJECT_DIR$/.idea/modules/spark-mooc-2024-04.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spark-mooc-2024-04-build.iml" filepath="$PROJECT_DIR$/.idea/modules/spark-mooc-2024-04-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SparkStreaming.iml" filepath="$PROJECT_DIR$/.idea/modules/SparkStreaming.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SparkStreaming-build.iml" filepath="$PROJECT_DIR$/.idea/modules/SparkStreaming-build.iml" />
     </modules>
   </component>
 </project>

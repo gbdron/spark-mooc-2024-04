@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ScalaCompilerConfiguration">
-    <profile name="sbt 1" modules="spark-mooc-2023-07,spark-mooc-2023-07_8625,spark-mooc-2023-12" />
+    <profile name="sbt 1" modules="SparkStreaming,spark-mooc-2023-07,spark-mooc-2023-07_8625,spark-mooc-2023-12" />
   </component>
 </project>

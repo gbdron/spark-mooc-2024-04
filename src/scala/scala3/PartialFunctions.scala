@@ -1,3 +1,4 @@
+
 package scala3
 
 object PartialFunctionsExample extends App {

@@ -1,62 +1,30 @@
-ThisBuild / version := "0.1.0-SNAPSHOT"
+ThisBuild / version := "1.0"
 
-ThisBuild /scalaVersion := "2.13.8"
+ThisBuild / scalaVersion := "2.12.15"
 
-lazy val root = (project in file("."))
-  .settings(
-    name := "spark-mooc-2023-12"
-  )
+val sparkVersion = "3.2.1"
 
-libraryDependencies += "org.typelevel" %% "cats-core" % "2.1.0"
-libraryDependencies += "org.typelevel" %% "cats-effect" % "3.4.5"
-libraryDependencies += "co.fs2" %% "fs2-core" % "3.6.1"
-libraryDependencies += "co.fs2" %% "fs2-io"   % "3.6.1"
-libraryDependencies += "org.http4s" %% "http4s-client" % "0.23.18"
-libraryDependencies += "org.http4s" %% "http4s-dsl" % "0.23.18"
-libraryDependencies += "org.http4s" %% "http4s-ember-server" % "0.23.18"
-libraryDependencies += "org.http4s" %% "http4s-ember-client" % "0.23.18"
-val circeVersion = "0.14.1"
-
-libraryDependencies ++= Seq(
+lazy val circeDependencies = Seq(
   "io.circe" %% "circe-core",
   "io.circe" %% "circe-generic",
   "io.circe" %% "circe-parser"
-).map(_ % circeVersion)
-libraryDependencies += "io.circe" %% "circe-derivation" % "0.13.0-M5"
+).map(_ % "0.11.2")
 
-libraryDependencies += "org.http4s" %% "http4s-circe" % "0.23.14"
-
-lazy val akkaVersion = "2.7.0"
-lazy val leveldbVersion = "0.7"
-lazy val leveldbjniVersion = "1.8"
-
-libraryDependencies ++= Seq(
-  // Use Coda Hale Metrics and Akka instrumentation
-  "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
-  "com.typesafe.akka" %% "akka-stream" % akkaVersion,
-  "com.typesafe.akka" %% "akka-persistence-typed" % akkaVersion,
-  "com.typesafe.akka" %% "akka-persistence-query" % akkaVersion,
-  "com.typesafe.akka" %% "akka-cluster-sharding-typed" % akkaVersion,
-  "com.typesafe.akka" %% "akka-cluster-typed" % akkaVersion,
-  "com.typesafe.akka" %% "akka-cluster-tools" % akkaVersion,
-  "com.typesafe.akka" %% "akka-testkit" % akkaVersion,
-  "com.typesafe.akka" %% "akka-remote" % akkaVersion,
-  "io.aeron" % "aeron-driver" % "1.40.0",
-  "io.aeron" % "aeron-client" % "1.40.0",
-
-  "org.iq80.leveldb" % "leveldb" % leveldbVersion,
-  "org.fusesource.leveldbjni" % "leveldbjni-all" % leveldbjniVersion,
-
-  "ch.qos.logback" % "logback-classic" % "1.2.3",
-  "com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion % Test,
-  "org.scalatest" %% "scalatest" % "3.1.0" % Test
+lazy val sparkDependencies = Seq(
+  "org.apache.spark"         %% "spark-sql"            % sparkVersion,
+  "org.apache.spark"         %% "spark-streaming"      % sparkVersion,
+  "org.apache.spark"         %% "spark-sql-kafka-0-10" % "3.2.0",
+  "org.apache.logging.log4j" % "log4j-core"            % "2.20.0",
+  "io.netty"          % "netty-all"                   % "4.1.97.Final"
 )
-libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.16"
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.16" % "test"
-libraryDependencies += "com.typesafe" % "config" % "1.3.3"
-libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-stream-kafka" % "4.0.2",
-  "com.typesafe.akka" %% "akka-stream" % akkaVersion
-)
-libraryDependencies += "dev.zio" %% "zio-kafka"         % "2.3.1"
-libraryDependencies += "dev.zio" %% "zio-kafka-testkit" % "2.3.1" % Test
+
+lazy val root = (project in file("."))
+  .settings(
+    name := "SparkStreaming",
+    libraryDependencies ++= sparkDependencies ++ circeDependencies,
+    javacOptions ++= Seq("-source", "16"),
+    javaOptions ++= Seq( // Spark-specific JVM options
+      "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+    ),
+    compileOrder := CompileOrder.JavaThenScala
+  )
